@@ -16,12 +16,6 @@ public class TutorialPageThreeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // Interface for communication with the activity
-    public interface OnTutorialPageInteractionListener {
-        void onfinishPage();
-        void onpreviousPage();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -38,13 +32,11 @@ public class TutorialPageThreeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tutorial_page_three, container, false);
 
-        // Initialize your buttons here
         Button finishButton = view.findViewById(R.id.finishButton);
         Button previousButton = view.findViewById(R.id.previousButton);
 
-        // Set up click listeners for the buttons
-        finishButton.setOnClickListener(v -> mListener.onfinishPage());
-        previousButton.setOnClickListener(v -> mListener.onpreviousPage());
+        finishButton.setOnClickListener(v -> mListener.onFinishTutorial());
+        previousButton.setOnClickListener(v -> mListener.onPreviousPage());
 
         return view;
     }

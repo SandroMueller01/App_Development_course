@@ -16,12 +16,6 @@ public class TutorialPageOneFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // Interface for communication with the activity
-    public interface OnTutorialPageInteractionListener {
-        void onNextPage();
-        void onSkipTutorial();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -38,11 +32,9 @@ public class TutorialPageOneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tutorial_page_one, container, false);
 
-        // Initialize your buttons here
         Button nextButton = view.findViewById(R.id.getStartedButton);
         Button skipButton = view.findViewById(R.id.skipTutorialButton);
 
-        // Set up click listeners for the buttons
         nextButton.setOnClickListener(v -> mListener.onNextPage());
         skipButton.setOnClickListener(v -> mListener.onSkipTutorial());
 

@@ -18,11 +18,12 @@
         tools:layout_editor_absoluteY="16dp"
         tools:ignore="MissingConstraints"/>
 
+
     <TextView
         android:id="@+id/headlineText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="100dp"
         android:text="@string/tut_headline_1"
         android:textColor="@color/white"
         android:textSize="38sp"
@@ -34,15 +35,14 @@
         android:id="@+id/descriptionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="416dp"
+        android:layout_marginTop="400dp"
         android:text="@string/tut_description_1"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintHorizontal_bias="0.285"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView" />
-
 
     <Button
         android:id="@+id/getStartedButton"
