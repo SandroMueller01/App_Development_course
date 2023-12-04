@@ -1,0 +1,28 @@
+<resources>
+    #App_name
+    <string name="app_name">Grip Trainer App</string>
+
+    ##Tutorial strings
+    <string name="description_of_the_image">ICON image</string>
+    #First
+    <string name="tut_headline_1">Getting back your sense of objects</string>
+    <string name="tut_description_1">Threw training your every day life will change</string>
+
+    #Second
+    <string name="tut_headline_2">Training 2-3 times a week</string>
+    <string name="tut_description_2">This will significantly change your well beeing and enhance your daily live</string>
+
+    #Third
+    <string name="tut_headline_3">Thriving threw technology</string>
+    <string name="tut_description_3">Our app will help you to keep on track and continue your training</string>
+
+    #Buttons
+    <string name="get_started">Get started</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="skip_tutorial">Skip</string>
+    <string name="finish">Finish</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
