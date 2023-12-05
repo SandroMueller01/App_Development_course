@@ -1,5 +1,6 @@
 package com.example.griptrainerapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -44,10 +45,9 @@ public class TutorialActivity extends AppCompatActivity implements OnTutorialPag
     }
 
     private void finishTutorial() {
-        // Logic to handle the completion of the tutorial
-        // Example: Navigate to the main part of your app or save the state in SharedPreferences
-        //Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        //startActivity(mainActivityIntent);
-        //finish();
+        Intent loginRegistrationIntent = new Intent(this, LoginRegistrationActivity.class);
+        startActivity(loginRegistrationIntent);
+
+        finish();
     }
 }
