@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     ##Login Strings
-    <string name="login_headline">Getting started right now login or register</string>
+    <string name="login_headline">Getting started right now!</string>
 
     #Change between login and register
     <string name="switch_login">Login</string>
@@ -29,7 +29,8 @@
     <string name="dob_yyyy">YYYY</string>
 
     # Login or Register button
-    <string name="login_register_button">Login</string>
+    <string name="login_button">Login </string>
+    <string name="register_button">Register</string>
 
     # Close Button
     <string name="close_button">Close</string>
