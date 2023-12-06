@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkTeal"
+    android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/headlineText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_headline"
+        android:textColor="@color/white"
+        android:textSize="38sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchLoginRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/switch_login"
+        android:textColor="@color/white"
+        android:thumbTint="@color/lime"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/headlineText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- LinearLayout to wrap username and password EditText fields -->
+    <LinearLayout
+        android:id="@+id/loginRelevant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/switchLoginRegister"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- EditText for Username -->
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="username"
+            android:hint="@string/username"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/transparent_white"
+            android:padding="16dp"/>
+
+        <!-- EditText for Password -->
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/transparent_white"
+            android:padding="16dp"/>
+    </LinearLayout>
+
+    <!-- LinearLayout to wrap confirm password and email EditText fields -->
+    <LinearLayout
+        android:id="@+id/registerRelevant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/loginRelevant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <!-- EditText for Confirm Password -->
+        <EditText
+            android:id="@+id/editTextConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/transparent_white"
+            android:padding="16dp"/>
+
+        <!-- EditText for Email -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:hint="@string/email_address"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white"
+            android:textColorHint="@color/transparent_white"
+            android:padding="16dp"/>
+    </LinearLayout>
+
+    <!-- LinearLayout to wrap the gender specific decisions -->
+    <LinearLayout
+        android:id="@+id/linearLayoutGender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerRelevant">
+
+        <!-- Female ImageView and TextView in a vertical LinearLayout -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/imageFemale"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:contentDescription="@string/female"
+                android:src="@drawable/gender_female"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/textViewFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/female"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <!-- Male ImageView and TextView in a vertical LinearLayout -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/imageMale"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:contentDescription="@string/male"
+                android:src="@drawable/gender_male"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/textViewMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- Divers ImageView and TextView in a vertical LinearLayout -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/imageDivers"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:contentDescription="@string/divers"
+                android:src="@drawable/gender_divers"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/textViewDivers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/divers"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- LinearLayout for Date of Birth elements -->
+    <LinearLayout
+        android:id="@+id/linearLayoutDateOfBirth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutGender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- TextView for Date of Birth label -->
+        <TextView
+            android:id="@+id/date_of_birthText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_of_birth"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+        <!-- EditText for Day -->
+        <EditText
+            android:id="@+id/editTextDay"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/dob_dd"
+            android:autofillHints=""
+            android:inputType="number"
+            android:maxLength="2"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/transparent_white"/>
+
+        <!-- EditText for Month -->
+        <EditText
+            android:id="@+id/editTextMonth"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/dob_mm"
+            android:autofillHints=""
+            android:inputType="number"
+            android:maxLength="2"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/transparent_white"/>
+
+        <!-- EditText for Year -->
+        <EditText
+            android:id="@+id/editTextYear"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/dob_yyyy"
+            android:autofillHints=""
+            android:inputType="number"
+            android:maxLength="4"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/transparent_white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutDateOfBirth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/buttonClose"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/close_button"
+            android:textColor="@color/lime"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"/>
+
+        <Button
+            android:id="@+id/buttonLoginRegister"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_button"
+            android:textColor="@color/lime"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"/>
+
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
