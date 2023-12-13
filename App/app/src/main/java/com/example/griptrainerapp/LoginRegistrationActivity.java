@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.content.Intent;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 
@@ -67,14 +67,21 @@ public class LoginRegistrationActivity extends AppCompatActivity {
 
         // Button Login/Register
         Button buttonLoginRegister = findViewById(R.id.buttonLoginRegister);
-        buttonLoginRegister.setOnClickListener(v -> finish());
+        buttonLoginRegister.setOnClickListener(v -> {
+            // Implement your login/register logic
+
+            // After successful login/register, navigate to BluetoothTestActivity
+            Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothTestActivity.class);
+            startActivity(bluetoothTestIntent);
+
+        });
+
         // Add listener method as well
 
         //Close the application
         Button buttonClose = findViewById(R.id.buttonClose);
         buttonClose.setOnClickListener(v -> finish(
-                // Navigate to the landing page
-                // Save information and then later usage for the login
+                //Close event
 
         ));
 
