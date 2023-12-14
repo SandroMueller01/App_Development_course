@@ -1,30 +1,42 @@
 package com.example.griptrainerapp;
-
-import android.view.View;
-import android.widget.Button;
+import android.os.Bundle;
+import android.content.Intent;
+import android.widget.Toast;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Button;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.content.Intent;
+import androidx.room.Room;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
+import com.example.griptrainerapp.database.User;
+import com.example.griptrainerapp.database.AppDatabase;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Executor;
 
 public class LoginRegistrationActivity extends AppCompatActivity {
     private ImageView imageViewFemale, imageViewMale, imageViewDivers;
     private TextView textViewFemale, textViewMale, textViewDivers;
 
+    private String selectedGender = "";
+    private AppDatabase db;
 
     private int SELECTED_TINT_COLOR;
     private int DEFAULT_TINT_COLOR;
     private int DEFAULT_TEXT_COLOR;
     private int SELECTED_TEXT_COLOR;
 
+    private final Executor executor = Executors.newSingleThreadExecutor();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_registration);
+
+        // Initialize the database
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database-name").build();
 
         // Get switching colors for genders
         SELECTED_TINT_COLOR = ContextCompat.getColor(this, R.color.lime);
@@ -68,12 +80,27 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         // Button Login/Register
         Button buttonLoginRegister = findViewById(R.id.buttonLoginRegister);
         buttonLoginRegister.setOnClickListener(v -> {
-            // Implement your login/register logic
 
-            // After successful login/register, navigate to BluetoothTestActivity
-            Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothTestActivity.class);
-            startActivity(bluetoothTestIntent);
+            // Database login/registration
+            String username = editTextUsername.getText().toString();
+            String password = editTextPassword.getText().toString();
+            String confirm_password = editTextConfirmPassword.getText().toString();
+            String e_mail = editTextEmail.getText().toString();
+            String gender = selectedGender;
+            String d_o_b = editTextDay.getText().toString() + "-" +
+                           editTextMonth.getText().toString() + "-" +
+                           editTextYear.getText().toString();
 
+
+            if (switchLoginRegister.isChecked()) {
+                if (!password.equals(confirm_password)) {
+                    Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                executor.execute(() -> performRegistration(username, password, e_mail, gender, d_o_b));
+            } else {
+                executor.execute(() -> performLogin(username, password));
+            }
         });
 
         // Add listener method as well
@@ -165,8 +192,10 @@ public class LoginRegistrationActivity extends AppCompatActivity {
 
     }
 
+    // Gender selection of the Registration
     private void selectGender(String gender) {
         resetTints();
+        selectedGender = gender;
         switch (gender) {
             case "female":
                 imageViewFemale.setColorFilter(SELECTED_TINT_COLOR);
@@ -184,6 +213,7 @@ public class LoginRegistrationActivity extends AppCompatActivity {
 
     }
 
+    // Tinting of the pictures are changed
     private void resetTints() {
         imageViewFemale.setColorFilter(DEFAULT_TINT_COLOR);
         imageViewMale.setColorFilter(DEFAULT_TINT_COLOR);
@@ -194,4 +224,40 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         textViewDivers.setTextColor(DEFAULT_TEXT_COLOR);
 
     }
+
+    private void performRegistration(String username, String password, String e_mail, String gender, String d_o_b) {
+        // Your registration logic (previously in doInBackground)
+        User user = new User();
+        user.username = username;
+        user.password = password; // Consider hashing the password
+        user.e_mail = e_mail;
+        user.gender = gender;
+        user.date_of_birth = d_o_b; // Ensure the field names match in the User class
+        db.userDao().insert(user);
+
+        // Switch to the main thread to update UI
+        runOnUiThread(() -> {
+            // This is equivalent to the onPostExecute method
+            // Update UI, e.g., navigate to another activity or show a toast
+            Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothTestActivity.class);
+            startActivity(bluetoothTestIntent);
+        });
+    }
+
+    private void performLogin(String username, String password) {
+        // Your login logic (previously in doInBackground)
+        User user = db.userDao().getUser(username, password);
+
+        // Switch to the main thread to update UI
+        runOnUiThread(() -> {
+            // This is equivalent to the onPostExecute method
+            if (user != null) {
+                Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothTestActivity.class);
+                startActivity(bluetoothTestIntent);
+            } else {
+                Toast.makeText(LoginRegistrationActivity.this, "Passwords or Username is wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
