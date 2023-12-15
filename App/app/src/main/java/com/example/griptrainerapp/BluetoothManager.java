@@ -15,9 +15,9 @@ import java.util.UUID;
 
 
 public class BluetoothManager {
-    private BluetoothAdapter bluetoothAdapter;
+    final private BluetoothAdapter bluetoothAdapter;
     private BluetoothSocket bluetoothSocket;
-    private Context context;
+    final private Context context;
 
     private static final int REQUEST_BLUETOOTH_CONNECT = 1;
 
