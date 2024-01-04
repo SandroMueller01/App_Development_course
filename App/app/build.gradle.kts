@@ -29,15 +29,15 @@ android {
 }
 
 dependencies {
-
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
-    implementation("androidx.sqlite:sqlite:2.4.0")
-    implementation ("androidx.room:room-runtime:2.6.1")
-    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.appcompat:appcompat:1.6.1") // Keep this up-to-date
+    implementation("com.google.android.material:material:1.11.0") // Check for updates
+    implementation("com.polidea.rxandroidble2:rxandroidble:1.10.0") // Make sure it's the latest version
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // Keep it updated
+    testImplementation("junit:junit:4.13.2") // Consider migrating to JUnit 5
+    androidTestImplementation("androidx.test.ext:junit:1.1.5") // Keep it updated
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1") // Keep it updated
+    implementation("androidx.viewpager2:viewpager2:1.0.0") // Keep it updated
+    implementation("androidx.sqlite:sqlite:2.4.0") // Check for updates
+    implementation("androidx.room:room-runtime:2.6.1") // Check for updates
+    annotationProcessor("androidx.room:room-compiler:2.6.1") // Check for updates
 }

@@ -239,7 +239,7 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             // This is equivalent to the onPostExecute method
             // Update UI, e.g., navigate to another activity or show a toast
-            Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothTestActivity.class);
+            Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothInterfaceActivity.class);
             startActivity(bluetoothTestIntent);
         });
     }
@@ -252,7 +252,7 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             // This is equivalent to the onPostExecute method
             if (user != null) {
-                Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothTestActivity.class);
+                Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothInterfaceActivity.class);
                 startActivity(bluetoothTestIntent);
             } else {
                 Toast.makeText(LoginRegistrationActivity.this, "Passwords or Username is wrong", Toast.LENGTH_SHORT).show();
