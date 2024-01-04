@@ -1,4 +1,4 @@
-package com.example.griptrainerapp;
+package com.example.griptrainerapp.loginregistration;
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.Toast;
@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.griptrainerapp.BluetoothLowEnergy.BluetoothInterfaceActivity;
+import com.example.griptrainerapp.R;
 import com.example.griptrainerapp.database.User;
 import com.example.griptrainerapp.database.AppDatabase;
 import java.util.concurrent.Executors;

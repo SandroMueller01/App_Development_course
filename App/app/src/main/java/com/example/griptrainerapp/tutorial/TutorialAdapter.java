@@ -1,4 +1,4 @@
-package com.example.griptrainerapp;
+package com.example.griptrainerapp.tutorial;
 
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.fragment.app.Fragment;

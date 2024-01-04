@@ -1,4 +1,4 @@
-package com.example.griptrainerapp;
+package com.example.griptrainerapp.BluetoothLowEnergy;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;

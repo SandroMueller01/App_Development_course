@@ -26,13 +26,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GripTrainerApp"
         tools:targetApi="32">
+
         <service
-            android:name=".BluetoothLEService"
+            android:name=".BluetoothLowEnergy.BluetoothLEService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"/>
 
         <activity
-            android:name=".TutorialActivity"
+            android:name=".tutorial.TutorialActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,9 +42,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginRegistrationActivity"
+            android:name=".loginregistration.LoginRegistrationActivity"
             android:exported="false" />
-        <activity android:name=".BluetoothInterfaceActivity" />
+        <activity android:name=".BluetoothLowEnergy.BluetoothInterfaceActivity" />
     </application>
 
 </manifest>

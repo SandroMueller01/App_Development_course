@@ -1,4 +1,4 @@
-package com.example.griptrainerapp;
+package com.example.griptrainerapp.BluetoothLowEnergy;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.griptrainerapp.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.griptrainerapp;
+package com.example.griptrainerapp.tutorial;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class TutorialPageThreeFragment extends Fragment {
+import com.example.griptrainerapp.R;
+
+public class TutorialPageOneFragment extends Fragment {
 
     private OnTutorialPageInteractionListener mListener;
 
-    public TutorialPageThreeFragment() {
+    public TutorialPageOneFragment() {
         // Required empty public constructor
     }
 
@@ -30,13 +32,13 @@ public class TutorialPageThreeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tutorial_page_three, container, false);
+        View view = inflater.inflate(R.layout.fragment_tutorial_page_one, container, false);
 
-        Button finishButton = view.findViewById(R.id.finishButton);
-        Button previousButton = view.findViewById(R.id.previousButton);
+        Button nextButton = view.findViewById(R.id.getStartedButton);
+        Button skipButton = view.findViewById(R.id.skipTutorialButton);
 
-        finishButton.setOnClickListener(v -> mListener.onFinishTutorial());
-        previousButton.setOnClickListener(v -> mListener.onPreviousPage());
+        nextButton.setOnClickListener(v -> mListener.onNextPage());
+        skipButton.setOnClickListener(v -> mListener.onSkipTutorial());
 
         return view;
     }
