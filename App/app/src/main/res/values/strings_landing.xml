@@ -1,0 +1,27 @@
+<resources>
+    #Headline
+    <string name="headline">GripStar</string>
+    #pageText
+    <string name="page_text">Kick off your grip training now and watch yourself get stronger every day!</string>
+
+    #Button text
+    <string name="training_start_config">Configure Training Routine</string>
+    <string name="training_manuel">Manuel Training</string>
+    <string name="training_history">History of Training</string>
+
+    <string name="button_close">Close</string>
+    <string name="button_back">Back</string>
+
+    #Drawable text
+    <string name="Bluetooth_icon">Bluetooth icon</string>
+
+    ## Start training
+    <string name="headline_start">Configure your training</string>
+
+    <string name="addanotherblock">+</string>
+    <string name="removeLastblock">-</string>
+    <string name="enter_len">Enter Length</string>
+    <string name="enter_steps">Enter Steps</string>
+
+    <string name="send">Send</string>
+</resources>

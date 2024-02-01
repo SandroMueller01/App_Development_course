@@ -45,6 +45,16 @@
             android:name=".loginregistration.LoginRegistrationActivity"
             android:exported="false" />
         <activity android:name=".BluetoothLowEnergy.BluetoothInterfaceActivity" />
+
+        <activity android:name=".LandingPages.LandingActivity" />
+
+        <activity android:name=".LandingPages.TrainingsConfigActivity"
+                  android:windowSoftInputMode="adjustPan"/>
+
+        <activity android:name=".LandingPages.ResumeActivity" />
+
+        <activity android:name=".LandingPages.HistoryTrainingActivity" />
+
     </application>
 
 </manifest>

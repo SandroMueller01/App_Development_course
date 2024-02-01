@@ -12,7 +12,8 @@ import androidx.room.Room;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.griptrainerapp.BluetoothLowEnergy.BluetoothInterfaceActivity;
+import com.example.griptrainerapp.LandingPages.LandingActivity;
+
 import com.example.griptrainerapp.R;
 import com.example.griptrainerapp.database.User;
 import com.example.griptrainerapp.database.AppDatabase;
@@ -94,6 +95,10 @@ public class LoginRegistrationActivity extends AppCompatActivity {
                            editTextMonth.getText().toString() + "-" +
                            editTextYear.getText().toString();
 
+            //if (!isValidPassword(password)) {
+            //    Toast.makeText(LoginRegistrationActivity.this, "Password must be 8-16 characters, letters, numbers, special character.", Toast.LENGTH_LONG).show();
+            //    return;
+            //}
 
             if (switchLoginRegister.isChecked()) {
                 if (!password.equals(confirm_password)) {
@@ -105,8 +110,6 @@ public class LoginRegistrationActivity extends AppCompatActivity {
                 executor.execute(() -> performLogin(username, password));
             }
         });
-
-        // Add listener method as well
 
         //Close the application
         Button buttonClose = findViewById(R.id.buttonClose);
@@ -194,7 +197,11 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         });
 
     }
-
+    // Password rules check
+    //private boolean isValidPassword(String password) {
+      //  String passwordRegex = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,16}$";
+        //return password.matches(passwordRegex);
+    //}
     // Gender selection of the Registration
     private void selectGender(String gender) {
         resetTints();
@@ -242,8 +249,8 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             // This is equivalent to the onPostExecute method
             // Update UI, e.g., navigate to another activity or show a toast
-            Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothInterfaceActivity.class);
-            startActivity(bluetoothTestIntent);
+            Intent LandingPageIntent = new Intent(LoginRegistrationActivity.this, LandingActivity.class);
+            startActivity(LandingPageIntent);
         });
     }
 
@@ -255,7 +262,7 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             // This is equivalent to the onPostExecute method
             if (user != null) {
-                Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, BluetoothInterfaceActivity.class);
+                Intent bluetoothTestIntent = new Intent(LoginRegistrationActivity.this, LandingActivity.class);
                 startActivity(bluetoothTestIntent);
             } else {
                 Toast.makeText(LoginRegistrationActivity.this, "Passwords or Username is wrong", Toast.LENGTH_SHORT).show();
