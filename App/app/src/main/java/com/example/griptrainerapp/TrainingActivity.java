@@ -317,7 +317,7 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
 
                 // Send the next instruction
                 sendNextInstruction();
-            }, delay); // Convert seconds to milliseconds
+            }, 1000); // Convert seconds to milliseconds
         }
     }
 
