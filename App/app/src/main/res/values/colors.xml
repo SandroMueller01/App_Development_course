@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="darkTeal">#18454b</color>
     <color name="lime" >#C8F902</color>
+    <color name="light_cyan">#008b8b</color>
     <color name="transparent_white">#90FFFFFF</color>
 
 </resources>

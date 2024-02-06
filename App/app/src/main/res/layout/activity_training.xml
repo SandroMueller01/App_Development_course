@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkTeal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/headlineTraining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/training"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:layout_marginBottom="20dp" />
+
+    <EditText
+        android:id="@+id/editTextTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="time"
+        android:layout_marginBottom="20dp"
+        android:foregroundTint="@color/lime"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/lime"/>
+
+    <!-- Row for the first two ProgressBars -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <!-- ProgressBar Container 0 -->
+        <LinearLayout
+            android:id="@+id/progressBarContainer0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textViewProgress0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/force_1"
+                android:textColor="@color/white" />
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progressTint="@color/lime"/>
+        </LinearLayout>
+
+        <!-- ProgressBar Container 1 -->
+        <LinearLayout
+            android:id="@+id/progressBarContainer1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textViewProgress1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/force_2"
+                android:textColor="@color/white" />
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progressTint="@color/lime"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Row for the next two ProgressBars -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="20dp">
+
+        <!-- ProgressBar Container 2 -->
+        <LinearLayout
+            android:id="@+id/progressBarContainer2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textViewProgress2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/force_3"
+                android:textColor="@color/white" />
+
+            <ProgressBar
+                android:id="@+id/progressBar3"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progressTint="@color/lime"/>
+        </LinearLayout>
+
+        <!-- ProgressBar Container 3 -->
+        <LinearLayout
+            android:id="@+id/progressBarContainer3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textViewProgress3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/force_4"
+                android:textColor="@color/white" />
+
+            <ProgressBar
+                android:id="@+id/progressBar4"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progressTint="@color/lime"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Row for Messages and Instructions Lists -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <!-- Messages List -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewReceive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send_mess"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"/>
+
+            <ListView
+                android:id="@+id/ReceiveMessage_lv_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <!-- Instructions List -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewInstructions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instructions"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"/>
+
+            <ListView
+                android:id="@+id/Instructions_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Buttons at the bottom -->
+    <!-- Container for Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/buttonStartTrain"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_training"
+            android:textSize="18sp"
+            android:layout_marginEnd="80dp"/>
+
+        <Button
+            android:id="@+id/buttonFinishTrain"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/finish_training"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

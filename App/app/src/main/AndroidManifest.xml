@@ -2,11 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -17,21 +26,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GripTrainerApp"
-        tools:targetApi="31">
+        tools:targetApi="32">
+
+        <service
+            android:name=".BluetoothLowEnergy.BluetoothLEService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="TODO" />
+
         <activity
-            android:name=".TutorialActivity"
+            android:name=".tutorial.TutorialActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".LoginRegistrationActivity"
+            android:name=".loginregistration.LoginRegistrationActivity"
             android:exported="false" />
+        <activity android:name=".BluetoothLowEnergy.BluetoothInterfaceActivity" />
 
-        <activity android:name=".BluetoothTestActivity" />
+        <activity android:name=".LandingPages.LandingActivity" />
+
+        <activity android:name=".LandingPages.TrainingsConfigActivity"
+                  android:windowSoftInputMode="adjustPan"/>
+
+        <activity android:name=".LandingPages.ManuelActivity" />
+
+        <activity android:name=".LandingPages.HistoryTrainingActivity" />
+
+        <activity android:name=".TrainingActivity" />
 
     </application>
 

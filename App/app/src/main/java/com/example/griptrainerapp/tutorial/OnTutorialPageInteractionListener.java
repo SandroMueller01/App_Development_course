@@ -1,4 +1,4 @@
-package com.example.griptrainerapp;
+package com.example.griptrainerapp.tutorial;
 
 public interface OnTutorialPageInteractionListener {
     void onNextPage();

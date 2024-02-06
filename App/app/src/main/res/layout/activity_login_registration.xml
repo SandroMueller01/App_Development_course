@@ -108,7 +108,7 @@
     <!-- LinearLayout to wrap the gender specific decisions -->
     <LinearLayout
         android:id="@+id/linearLayoutGender"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
@@ -264,7 +264,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
@@ -295,7 +295,5 @@
 
 
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

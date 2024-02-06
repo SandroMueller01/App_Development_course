@@ -1,0 +1,60 @@
+<resources>
+    #Headline
+    <string name="headline">GripStar</string>
+    #pageText
+    <string name="page_text">Kick off your grip training now and watch yourself get stronger every day!</string>
+
+    #Button text
+    <string name="training_start_config">Configure Training Routine</string>
+    <string name="training_manuel">Manuel Training</string>
+    <string name="training_history">History of Training</string>
+
+    <string name="button_close">Close</string>
+    <string name="button_back">Back</string>
+
+    #Drawable text
+    <string name="Bluetooth_icon">Bluetooth icon</string>
+
+    ## Start config training
+    <string name="headline_start">Configure your training</string>
+
+    <string name="add_another_block">+</string>
+    <string name="removeLastBlock">-</string>
+    <string name="enter_len">Enter Delay</string>
+    <string name="enter_steps">Enter Steps</string>
+
+    <string name="send">Send</string>
+
+    #Start manuel steering
+    <string name="Headline_man">Manuel Training</string>
+    <string name="connection_state_fl">Connection State: false</string>
+    <string name="connection_state_tu">Connection State: true</string>
+
+
+    <string name="force_meas">Forces Measured:</string>
+    <string name="force_1">Force 1</string>
+    <string name="force_2">Force 2</string>
+    <string name="force_3">Force 3</string>
+    <string name="force_4">Force 4</string>
+
+    <string name="description_arrow_down">Arrow down</string>
+    <string name="description_arrow_up">Arrow up</string>
+
+    <string name="send_mess">Messages: </string>
+
+    <string name="stopButton">Stop Training</string>
+
+    #History Training
+    <string name="headline_his">Trainings History</string>
+    <string name="start_training">Start Training</string>
+
+    <string name="legend_1">M-Manuel Training</string>
+    <string name="legend_2">C-Configuration Training</string>
+    <string name="legend_3">H-From History Training</string>
+
+    #Training
+    <string name="training">Training</string>
+    <string name="abroad">Abroad</string>
+    <string name="finish_training">Finish and Save</string>
+
+</resources>

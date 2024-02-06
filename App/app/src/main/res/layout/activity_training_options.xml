@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LandingPages.LandingActivity"
+    android:background="@color/darkTeal"
+    android:padding="16dp">
+
+    <!-- Header Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:contentDescription="@string/description_of_the_image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/app_icon" />
+
+        <TextView
+            android:id="@+id/headlineText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/headline"
+            android:textColor="@color/white"
+            android:textSize="38sp"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Page Text -->
+    <TextView
+        android:id="@+id/pageText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/page_text"
+        android:textColor="@color/lime"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"/>
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/startTrainingConfigButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/training_start_config"
+        android:layout_marginTop="16dp"
+        />
+
+    <Button
+        android:id="@+id/manuelTrainingButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/training_manuel"
+        android:layout_marginTop="16dp"
+        />
+
+
+    <Button
+        android:id="@+id/trainingHistoryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/training_history"
+        android:layout_marginTop="16dp"/>
+
+
+
+    <ImageView
+        android:id="@+id/bluetoothIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/Bluetooth_icon"
+        android:src="@drawable/bluetooth_icon"
+        android:layout_gravity="center"
+        app:tint="@color/white" />
+
+
+
+    <!-- Footer Container for Back and Close buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="16dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/backButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_back"
+            android:textColor="@color/lime" />
+
+        <Button
+            android:id="@+id/closeButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="@string/button_close"
+            android:textColor="@color/lime" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

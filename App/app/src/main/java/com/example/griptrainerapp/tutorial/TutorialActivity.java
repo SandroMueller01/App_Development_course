@@ -1,9 +1,12 @@
-package com.example.griptrainerapp;
+package com.example.griptrainerapp.tutorial;
 
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.griptrainerapp.R;
+import com.example.griptrainerapp.loginregistration.LoginRegistrationActivity;
 
 public class TutorialActivity extends AppCompatActivity implements OnTutorialPageInteractionListener {
 

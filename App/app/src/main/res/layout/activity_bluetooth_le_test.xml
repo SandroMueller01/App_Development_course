@@ -14,9 +14,9 @@
     <EditText
         android:id="@+id/editTextSend"
         android:layout_width="match_parent"
-        android:layout_height="219dp"
-        android:hint="Enter text to send"
+        android:layout_height="93dp"
         android:autofillHints=""
+        android:hint="Enter text to send"
         android:inputType="text" />
 
     <Button
@@ -30,8 +30,20 @@
         android:layout_width="match_parent"
         android:layout_height="195dp"
         android:layout_marginTop="16dp"
-        android:background="@android:color/darker_gray"
+        android:textColor="@color/white"
+        android:background="@android:color/black"
         android:padding="16dp"
         android:text="Received Text" />
+
+    <Button
+        android:id="@+id/buttonDiscoverDevices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Discover Devices" />
+    <ListView
+        android:id="@+id/deviceListView"
+        android:layout_width="match_parent"
+        android:layout_height="144dp" />
+
 
 </LinearLayout>
