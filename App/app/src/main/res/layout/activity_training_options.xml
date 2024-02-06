@@ -51,14 +51,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/training_start_config"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        />
 
     <Button
         android:id="@+id/manuelTrainingButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/training_manuel"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        />
+
 
     <Button
         android:id="@+id/trainingHistoryButton"
@@ -66,6 +69,20 @@
         android:layout_height="wrap_content"
         android:text="@string/training_history"
         android:layout_marginTop="16dp"/>
+
+
+
+    <ImageView
+        android:id="@+id/bluetoothIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/Bluetooth_icon"
+        android:src="@drawable/bluetooth_icon"
+        android:layout_gravity="center"
+        app:tint="@color/white" />
+
+
 
     <!-- Footer Container for Back and Close buttons -->
     <LinearLayout
@@ -97,19 +114,6 @@
             android:textColor="@color/lime" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/bluetoothIcon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:contentDescription="@string/Bluetooth_icon"
-            android:src="@drawable/bluetooth_icon"
-            android:layout_centerInParent="true"
-            app:tint="@color/white" />
-
-    </RelativeLayout>
 
 </LinearLayout>

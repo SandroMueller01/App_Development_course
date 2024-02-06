@@ -15,13 +15,42 @@
     #Drawable text
     <string name="Bluetooth_icon">Bluetooth icon</string>
 
-    ## Start training
+    ## Start config training
     <string name="headline_start">Configure your training</string>
 
     <string name="addanotherblock">+</string>
     <string name="removeLastblock">-</string>
-    <string name="enter_len">Enter Length</string>
+    <string name="enter_len">Enter Delay</string>
     <string name="enter_steps">Enter Steps</string>
 
     <string name="send">Send</string>
+
+    #Start manuel steering
+    <string name="Headline_man">Manuel Training</string>
+    <string name="connection_state_fl">Connection State: false</string>
+    <string name="connection_state_tu">Connection State: true</string>
+
+
+    <string name="force_meas">Forces Measured:</string>
+    <string name="force_1">Force 1</string>
+    <string name="force_2">Force 2</string>
+    <string name="force_3">Force 3</string>
+    <string name="force_4">Force 4</string>
+
+    <string name="description_arrow_down">Arrow down</string>
+    <string name="description_arrow_up">Arrow up</string>
+
+    <string name="send_mess">Messages: </string>
+
+    <string name="stopButton">Stop Training</string>
+
+    #History Training
+    <string name="headline_his">Trainings History</string>
+    <string name="start_training">Start Training</string>
+
+    #Training
+    <string name="training">Training</string>
+    <string name="abroad">Abroad</string>
+    <string name="finish_training">Finish and Save</string>
+
 </resources>

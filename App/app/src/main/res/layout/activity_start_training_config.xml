@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:paddingBottom="40dp"
+        android:paddingBottom="16dp"
         android:text="@string/headline_start"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toStartOf="@id/bluetoothIcon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

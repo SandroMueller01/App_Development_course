@@ -3,6 +3,7 @@ package com.example.griptrainerapp.database;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 import androidx.lifecycle.LiveData;
 import java.util.List;
@@ -40,4 +41,22 @@ public interface UserDao {
 
     @Query("SELECT * FROM sections WHERE training_id = :trainingId")
     LiveData<List<Section>> getSectionsForTraining(int trainingId);
+
+    // Insert a new manual training
+    @Insert
+    void insertManualTraining(Training training);
+
+    // Get the count of manual trainings for a user
+    @Query("SELECT COUNT(*) FROM trainings WHERE user_id = :userId AND training_name LIKE 'M%'")
+    int getManualTrainingCount(int userId);
+
+    // Insert a new manual training with the appropriate ID
+    @Transaction
+    public default void insertManualTrainingWithCustomId(Training training) {
+        int userId = training.userId;
+        int manualTrainingCount = getManualTrainingCount(userId);
+        String manualTrainingId = "M" + (manualTrainingCount + 1); // Construct the new training ID
+        training.trainingName = manualTrainingId;
+        insertManualTraining(training);
+    }
 }

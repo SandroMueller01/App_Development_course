@@ -12,6 +12,7 @@ import androidx.room.Room;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.griptrainerapp.BluetoothLowEnergy.BluetoothInterfaceActivity;
 import com.example.griptrainerapp.LandingPages.LandingActivity;
 
 import com.example.griptrainerapp.R;

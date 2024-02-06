@@ -1,56 +1,166 @@
 package com.example.griptrainerapp.LandingPages;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.example.griptrainerapp.BluetoothLowEnergy.BluetoothLEService;
+import com.example.griptrainerapp.BluetoothLowEnergy.PermissionsUtil;
 import com.example.griptrainerapp.R;
 
-public class LandingActivity extends AppCompatActivity {
+public class LandingActivity extends AppCompatActivity implements BluetoothLEService.BluetoothServiceListener {
+    private ImageView bluetoothIcon;
+    private boolean isBluetoothConnected = false;
+    private BluetoothLEService bluetoothService;
+    private boolean isBound = false;
+    private boolean deviceReady = true;
+
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BluetoothLEService.LocalBinder binder = (BluetoothLEService.LocalBinder) service;
+            bluetoothService = binder.getService();
+            bluetoothService.registerListener(LandingActivity.this);
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bluetoothService = null;
+            isBound = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_training_options); // Make sure to use the correct layout file name here
+        setContentView(R.layout.activity_training_options);
 
-        // Initialize buttons
+        initializeUIComponents();
+
+        if (!PermissionsUtil.hasBluetoothPermissions(this)) {
+            PermissionsUtil.requestBluetoothPermissions(this);
+        } else {
+            Log.d("BluetoothInterfaceActivity", "Bluetooth permission was granted");
+        }
+
+        Intent intent = new Intent(this, BluetoothLEService.class);
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+    }
+
+    private void initializeUIComponents() {
+        bluetoothIcon = findViewById(R.id.bluetoothIcon);
         Button startTrainingButton = findViewById(R.id.startTrainingConfigButton);
-        Button resumeTrainingButton = findViewById(R.id.manuelTrainingButton);
+        Button manualTrainingButton = findViewById(R.id.manuelTrainingButton);
+
+        View.OnClickListener buttonClickListener = v -> {
+            if (!deviceReady) {
+                Toast.makeText(LandingActivity.this, "Please connect with BLE, press on the bluetooth icon", Toast.LENGTH_SHORT).show();
+            } else {
+                // Proceed with the action
+                if (v.getId() == R.id.startTrainingConfigButton) {
+                    navigateTo(TrainingsConfigActivity.class);
+                } else if (v.getId() == R.id.manuelTrainingButton) {
+                    navigateTo(ManuelActivity.class);
+                }
+            }
+        };
+
+        startTrainingButton.setOnClickListener(buttonClickListener);
+        manualTrainingButton.setOnClickListener(buttonClickListener);
+
         Button trainingHistoryButton = findViewById(R.id.trainingHistoryButton);
         Button backButton = findViewById(R.id.backButton);
         Button closeButton = findViewById(R.id.closeButton);
 
-        // Set onClickListeners
-        startTrainingButton.setOnClickListener(v -> {
-            // Handle "Start Training" action
-            Intent intent = new Intent(LandingActivity.this, TrainingsConfigActivity.class);
-            startActivity(intent);
-        });
-
-        resumeTrainingButton.setOnClickListener(v -> {
-            // Handle "Resume Training" action
-            Intent intent = new Intent(LandingActivity.this, ResumeActivity.class);
-            startActivity(intent);
-        });
-
         trainingHistoryButton.setOnClickListener(v -> {
-            // Handle "Training History" action
-             Intent intent = new Intent(LandingActivity.this, HistoryTrainingActivity.class);
-             startActivity(intent);
+            Intent intent = new Intent(LandingActivity.this, HistoryTrainingActivity.class);
+            intent.putExtra("DeviceReady", deviceReady); // Pass the deviceReady state
+            startActivity(intent);
         });
 
-        backButton.setOnClickListener(v -> {
-            // Handle "Back" action
-            // This could simply finish the current activity
-            finish();
-        });
+        backButton.setOnClickListener(v -> finish());
+        closeButton.setOnClickListener(v -> finishAffinity());
 
-        closeButton.setOnClickListener(v -> {
-            // Handle "Close" action
-            // This should close the app
-            finishAffinity(); // This method finishes this activity as well as all activities immediately below it in the current task that have the same affinity.
+        bluetoothIcon.setOnClickListener(v -> {
+            if (!isBluetoothConnected) {
+                connectToDevice();
+            } else {
+                Toast.makeText(this,"BluetoothConnection lost", Toast.LENGTH_SHORT).show();
+            }
         });
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PermissionsUtil.REQUEST_BLUETOOTH_PERMISSIONS) {
+            if (PermissionsUtil.hasBluetoothPermissions(this)) {
+                Log.d("BluetoothInterfaceActivity", "Permissions are all granted");
+            } else {
+                Log.e("BluetoothInterfaceActivity", "Bluetooth permission was denied");
+                Toast.makeText(this, "Bluetooth permissions are required for this feature", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void navigateTo(Class<?> targetActivity) {
+        Intent intent = new Intent(LandingActivity.this, targetActivity);
+        startActivity(intent);
+    }
+
+
+    private void connectToDevice() {
+        if (isBound) {
+            String deviceAddress = getDeviceAddress();
+            bluetoothService.connect(deviceAddress);
+            // The actual connection result will be handled asynchronously through the service listener callbacks
+
+            //Set icon to lime to signalise the connection was successful
+            bluetoothIcon.setColorFilter(ContextCompat.getColor(LandingActivity.this, R.color.lime));
+
+            deviceReady = true;
+
+            Button startTrainingButton = findViewById(R.id.startTrainingConfigButton);
+            Button manualTrainingButton = findViewById(R.id.manuelTrainingButton);
+
+            // Enable the buttons
+            startTrainingButton.setEnabled(true);
+            manualTrainingButton.setEnabled(true);
+        } else {
+            Toast.makeText(this, "Bluetooth service not bound", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getDeviceAddress() {
+        // Return the address of the device you want to connect to
+        return "7C:9E:BD:66:4C:26";
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isBound) {
+            bluetoothService.unregisterListener(this);
+            unbindService(serviceConnection);
+            isBound = false;
+            bluetoothIcon.setColorFilter(ContextCompat.getColor(LandingActivity.this, R.color.white));
+        }
+    }
+
+    @Override
+    public void onDataReceived(String data) {
+        //Handle start message from ESP32
+
+    }
+
 }

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.bluetooth"
@@ -30,7 +31,8 @@
         <service
             android:name=".BluetoothLowEnergy.BluetoothLEService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true"
+            android:permission="TODO" />
 
         <activity
             android:name=".tutorial.TutorialActivity"
@@ -51,9 +53,11 @@
         <activity android:name=".LandingPages.TrainingsConfigActivity"
                   android:windowSoftInputMode="adjustPan"/>
 
-        <activity android:name=".LandingPages.ResumeActivity" />
+        <activity android:name=".LandingPages.ManuelActivity" />
 
         <activity android:name=".LandingPages.HistoryTrainingActivity" />
+
+        <activity android:name=".TrainingActivity" />
 
     </application>
 
