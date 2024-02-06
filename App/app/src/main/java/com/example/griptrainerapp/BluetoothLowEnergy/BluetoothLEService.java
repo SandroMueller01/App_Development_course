@@ -107,28 +107,8 @@ public class BluetoothLEService extends Service {
     }
 
     // Method to disconnect from a BLE device
-    /*public void disconnect() {
-        if (bluetoothAdapter == null || bluetoothGatt == null) {
-            Log.w("BluetoothLEService", "BluetoothAdapter not initialized");
-            return;
-        }
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            Log.d("BluetoothLEService", "Trying to create a new connection.");
-        }
-        bluetoothGatt.disconnect();
-    }*/
 
     // Method to read a characteristic from the connected device
-    /*public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
-        if (bluetoothAdapter == null || bluetoothGatt == null) {
-            Log.w("BluetoothLEService", "BluetoothAdapter not initialized");
-            return;
-        }
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            Log.d("BluetoothLEService", "Trying to create a new connection.");
-        }
-        bluetoothGatt.readCharacteristic(characteristic);
-    }*/
 
     // Method to close the GATT client
     public void close() {
@@ -183,6 +163,7 @@ public class BluetoothLEService extends Service {
                 if (ActivityCompat.checkSelfPermission(BluetoothLEService.this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                     Log.e("BluetoothLEService", "Bluetooth_Connect no permission granted");
                 }
+                assert device != null;
                 String deviceName = device.getName();
                 String deviceAddress = device.getAddress();
 
@@ -208,14 +189,9 @@ public class BluetoothLEService extends Service {
         listeners.remove(listener);
     }
 
-    /*private void notifyDataReceived(String data) {
-        for (BluetoothServiceListener listener : listeners) {
-            listener.onDataReceived(data);
-        }
-    }*/
-
     public interface BluetoothServiceListener {
         void onDataReceived(String data);
+        void onConnectionStatusChanged(boolean connected);
 
     }
 
@@ -243,14 +219,22 @@ public class BluetoothLEService extends Service {
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 Log.i("BluetoothLEService", "Connected to GATT server.");
+                notifyConnectionStatusChanged(true);
                 // Discover services after successful connection
                 if (ActivityCompat.checkSelfPermission(BluetoothLEService.this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                     Log.d("BluetoothLEService", "Trying to create a new connection.");
                 }
                 bluetoothGatt.discoverServices();
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                notifyConnectionStatusChanged(false);
                 Log.i("BluetoothLEService", "Disconnected from GATT server.");
                 close();
+            }
+        }
+
+        private void notifyConnectionStatusChanged(boolean connected) {
+            for (BluetoothServiceListener listener : listeners) {
+                listener.onConnectionStatusChanged(connected);
             }
         }
 
@@ -280,30 +264,12 @@ public class BluetoothLEService extends Service {
             }
         }
 
-        /*public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
-            if (bluetoothGatt != null) {
-                if (ActivityCompat.checkSelfPermission(BluetoothLEService.this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    Log.e("BluetoothLEService", "Permission not granted for Bluetooth_Connect");
-                }
-                bluetoothGatt.readCharacteristic(characteristic);
-            }
-        }*/
-
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.i("BluetoothLEService", "Characteristic write successful");
             }
         }
-
-        /*public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
-            if (bluetoothGatt != null) {
-                if (ActivityCompat.checkSelfPermission(BluetoothLEService.this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    Log.e("BluetoothLEService", "Permission not granted for Bluetooth_Connect");
-                }
-                bluetoothGatt.writeCharacteristic(characteristic);
-            }
-        }*/
 
         public void setCharacteristicNotification() {
             if (bluetoothGatt != null) {

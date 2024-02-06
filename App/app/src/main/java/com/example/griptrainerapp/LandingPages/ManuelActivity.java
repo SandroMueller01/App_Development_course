@@ -61,9 +61,27 @@ public class ManuelActivity extends Activity implements BluetoothLEService.Bluet
             isServiceBound = false;
             // Update connection state TextView
             textView.setText(R.string.connection_state_fl);
-            finish();
+            if (!isFinishing()) {
+                navigateToLandingActivity();
+            }
         }
     };
+    @Override
+    public void onConnectionStatusChanged(boolean connected) {
+        runOnUiThread(() -> {
+            if (!connected) {
+                // Connection lost, return to LandingActivity
+                Toast.makeText(ManuelActivity.this, "Bluetooth connection lost, returning to main menu", Toast.LENGTH_SHORT).show();
+                navigateToLandingActivity();
+            }
+        });
+    }
+
+    private void navigateToLandingActivity() {
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
+        finish(); // Close the current activity
+    }
 
     @Override
     protected void onStart() {
@@ -74,16 +92,21 @@ public class ManuelActivity extends Activity implements BluetoothLEService.Bluet
 
     @Override
     protected void onStop() {
-        super.onStop();
         if (isServiceBound) {
             bluetoothService.unregisterListener(this);
             unbindService(serviceConnection);
             isServiceBound = false;
         }
+        super.onStop();
     }
 
     @Override
     public void onDataReceived(String data) {
+        if (isFinishing()) {
+            // Activity is finishing, no need to process the data
+            return;
+        }
+
         runOnUiThread(() -> {
             if (isTrainingStopped) {
                 // Training is stopped, ignore incoming data

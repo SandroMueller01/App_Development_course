@@ -64,6 +64,9 @@ public class LandingActivity extends AppCompatActivity implements BluetoothLESer
         Button startTrainingButton = findViewById(R.id.startTrainingConfigButton);
         Button manualTrainingButton = findViewById(R.id.manuelTrainingButton);
 
+        startTrainingButton.setEnabled(false);
+        manualTrainingButton.setEnabled(false);
+
         View.OnClickListener buttonClickListener = v -> {
             if (!deviceReady) {
                 Toast.makeText(LandingActivity.this, "Please connect with BLE, press on the bluetooth icon", Toast.LENGTH_SHORT).show();
@@ -122,20 +125,23 @@ public class LandingActivity extends AppCompatActivity implements BluetoothLESer
     private void connectToDevice() {
         if (isBound) {
             String deviceAddress = getDeviceAddress();
-            bluetoothService.connect(deviceAddress);
-            // The actual connection result will be handled asynchronously through the service listener callbacks
+            boolean attemptingToConnect = bluetoothService.connect(deviceAddress);
 
-            //Set icon to lime to signalise the connection was successful
-            bluetoothIcon.setColorFilter(ContextCompat.getColor(LandingActivity.this, R.color.lime));
+            if (!attemptingToConnect) {
+                Toast.makeText(this, "Failed to start connection attempt", Toast.LENGTH_SHORT).show();
+            }else{
+                bluetoothIcon.setColorFilter(ContextCompat.getColor(LandingActivity.this, R.color.lime));
 
-            deviceReady = true;
+                deviceReady = true;
 
-            Button startTrainingButton = findViewById(R.id.startTrainingConfigButton);
-            Button manualTrainingButton = findViewById(R.id.manuelTrainingButton);
+                Button startTrainingButton = findViewById(R.id.startTrainingConfigButton);
+                Button manualTrainingButton = findViewById(R.id.manuelTrainingButton);
 
-            // Enable the buttons
-            startTrainingButton.setEnabled(true);
-            manualTrainingButton.setEnabled(true);
+                // Enable the buttons
+                startTrainingButton.setEnabled(true);
+                manualTrainingButton.setEnabled(true);
+            }
+
         } else {
             Toast.makeText(this, "Bluetooth service not bound", Toast.LENGTH_SHORT).show();
         }
@@ -156,6 +162,24 @@ public class LandingActivity extends AppCompatActivity implements BluetoothLESer
             bluetoothIcon.setColorFilter(ContextCompat.getColor(LandingActivity.this, R.color.white));
         }
     }
+    @Override
+    public void onConnectionStatusChanged(boolean connected) {
+        runOnUiThread(() -> {
+            if (connected) {
+                // Connection established - enable buttons
+                findViewById(R.id.startTrainingConfigButton).setEnabled(true);
+                findViewById(R.id.manuelTrainingButton).setEnabled(true);
+                bluetoothIcon.setColorFilter(ContextCompat.getColor(LandingActivity.this, R.color.lime));
+            } else {
+                // Connection lost - disable buttons
+                findViewById(R.id.startTrainingConfigButton).setEnabled(false);
+                findViewById(R.id.manuelTrainingButton).setEnabled(false);
+                bluetoothIcon.setColorFilter(ContextCompat.getColor(LandingActivity.this, R.color.white));
+                Toast.makeText(LandingActivity.this, "Bluetooth connection lost", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public void onDataReceived(String data) {

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.griptrainerapp.BluetoothLowEnergy.BluetoothLEService;
+import com.example.griptrainerapp.LandingPages.LandingActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,7 +42,6 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
     private ProgressBar progressBar1, progressBar2, progressBar3, progressBar4;
     private int currentInstructionIndex = 0;
     private EditText editTextTime;
-    private Button buttonFinishTrain, buttonStart;
     private ListView messagesListView, instructionsListView;
     private Handler timerHandler;
     private Runnable timerRunnable;
@@ -49,9 +50,9 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
     private boolean isServiceBound = false;
 
     private ArrayList<String> messagesList = new ArrayList<>();
-    private ArrayList<String> instructionsList = new ArrayList<>();
+    private final ArrayList<String> instructionsList = new ArrayList<>();
 
-    private ServiceConnection serviceConnection = new ServiceConnection() {
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             BluetoothLEService.LocalBinder binder = (BluetoothLEService.LocalBinder) service;
@@ -64,6 +65,9 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
         public void onServiceDisconnected(ComponentName componentName) {
             bluetoothService = null;
             isServiceBound = false;
+            if (!isFinishing()) {
+                navigateToLandingActivity();
+            }
         }
     };
 
@@ -74,14 +78,26 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
 
         // Initialize UI elements
         editTextTime = findViewById(R.id.editTextTime);
-        buttonFinishTrain = findViewById(R.id.buttonFinishTrain);
-        buttonStart = findViewById(R.id.buttonStartTrain);
+        Button buttonFinishTrain = findViewById(R.id.buttonFinishTrain);
+        Button buttonStart = findViewById(R.id.buttonStartTrain);
         messagesListView = findViewById(R.id.ReceiveMessage_lv_1);
         instructionsListView = findViewById(R.id.Instructions_lv);
 
         ArrayList<String> passedInstructions = getIntent().getStringArrayListExtra("trainingInstructions");
+        String configSource = getIntent().getStringExtra("configSource");
+
         if (passedInstructions != null) {
-            instructionsList.addAll(passedInstructions); // Add all received instructions to the list
+            if ("TrainingsConfigActivity".equals(configSource)) {
+                // The configuration is coming from TrainingsConfigActivity, process accordingly
+                for (String instruction : passedInstructions) {
+                    // Directly add to instructionsList, assuming they are in the correct format
+                    instructionsList.add(instruction);
+                }
+            } else {
+                // The configuration is coming from ManuelActivity or another source, handle differently
+                // You might need to parse the instructions differently based on your application's logic
+                processManuelActivityInstructions(passedInstructions);
+            }
         }
 
         // Setup ListViews with custom ArrayAdapter
@@ -111,6 +127,32 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
 
     }
 
+    private void processManuelActivityInstructions(ArrayList<String> instructions) {
+        Log.d("manuelSteering", "Is true");
+        for (String instruction : instructions) {
+            // Assuming the instruction format is "Block X: Delay: Y, Steps: Z"
+            // First, remove the "Block X:" part
+            String details = instruction.substring(instruction.indexOf(":") + 1).trim();
+
+            // Split the remaining string by ", " to separate the "Delay" and "Steps" parts
+            String[] parts = details.split(", ");
+            for (String part : parts) {
+                // Split each part by ": " to separate the label ("Delay" or "Steps") from its value
+                String[] keyValue = part.split(": ");
+                if (keyValue.length == 2) {
+                    // Reformat to "Steps: Z" or "Delay: Y" and add to the list
+                    String reformatted = keyValue[0].trim() + ": " + keyValue[1].trim();
+                    instructionsList.add(reformatted);
+                }
+            }
+        }
+
+        // Notify the adapter that the data set has changed to refresh the ListView
+        ((ArrayAdapter<String>) instructionsListView.getAdapter()).notifyDataSetChanged();
+    }
+
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -120,12 +162,12 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
 
     @Override
     protected void onStop() {
-        super.onStop();
         if (isServiceBound) {
             bluetoothService.unregisterListener(this);
             unbindService(serviceConnection);
             isServiceBound = false;
         }
+        super.onStop();
     }
 
     private void setupListView(ListView listView, ArrayList<String> dataList) {
@@ -153,6 +195,23 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
         }
         stopTimer();
         finish();
+    }
+
+    @Override
+    public void onConnectionStatusChanged(boolean connected) {
+        runOnUiThread(() -> {
+            if (!connected) {
+                // Connection lost, return to LandingActivity
+                Toast.makeText(TrainingActivity.this, "Bluetooth connection lost, returning to main menu", Toast.LENGTH_SHORT).show();
+                navigateToLandingActivity();
+            }
+        });
+    }
+
+    private void navigateToLandingActivity() {
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
+        finish(); // Close the current activity
     }
 
     private void saveTrainingData() {
@@ -235,20 +294,33 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
             }
 
             // Highlight the current instruction in the ListView (if needed)
-            ((ArrayAdapter<String>) instructionsListView.getAdapter()).notifyDataSetChanged();
+
+            // Check if the adapter is an instance of ArrayAdapter<String> before casting
+            ListAdapter adapter = instructionsListView.getAdapter();
+            if (adapter instanceof ArrayAdapter<?>) {
+                ArrayAdapter<String> arrayAdapter = (ArrayAdapter<String>) adapter;
+                arrayAdapter.notifyDataSetChanged();
+            }
 
             // Use extracted delay for the next instruction
             new Handler().postDelayed(() -> {
                 // Remove the sent instruction from the list
                 instructionsList.remove(currentInstructionIndex);
                 // No need to increment index as the list size has decreased
-                ((ArrayAdapter<String>) instructionsListView.getAdapter()).notifyDataSetChanged();
+
+                // Check if the adapter is an instance of ArrayAdapter<String> before casting
+                ListAdapter updatedAdapter = instructionsListView.getAdapter();
+                if (updatedAdapter instanceof ArrayAdapter<?>) {
+                    ArrayAdapter<String> updatedArrayAdapter = (ArrayAdapter<String>) updatedAdapter;
+                    updatedArrayAdapter.notifyDataSetChanged();
+                }
 
                 // Send the next instruction
                 sendNextInstruction();
-            }, (long) delay * 1000); // Convert seconds to milliseconds
+            }, delay); // Convert seconds to milliseconds
         }
     }
+
 
     // Method to extract delay from the instruction string
     private int extractDelay(String instruction) {

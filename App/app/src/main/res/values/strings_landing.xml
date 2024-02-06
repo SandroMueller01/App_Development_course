@@ -18,8 +18,8 @@
     ## Start config training
     <string name="headline_start">Configure your training</string>
 
-    <string name="addanotherblock">+</string>
-    <string name="removeLastblock">-</string>
+    <string name="add_another_block">+</string>
+    <string name="removeLastBlock">-</string>
     <string name="enter_len">Enter Delay</string>
     <string name="enter_steps">Enter Steps</string>
 
@@ -47,6 +47,10 @@
     #History Training
     <string name="headline_his">Trainings History</string>
     <string name="start_training">Start Training</string>
+
+    <string name="legend_1">M-Manuel Training</string>
+    <string name="legend_2">C-Configuration Training</string>
+    <string name="legend_3">H-From History Training</string>
 
     #Training
     <string name="training">Training</string>
