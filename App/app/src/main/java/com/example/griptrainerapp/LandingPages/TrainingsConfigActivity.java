@@ -40,6 +40,7 @@ public class TrainingsConfigActivity extends AppCompatActivity implements Blueto
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_start_training_config);
 
+
                 Button addBlockButton = findViewById(R.id.addBlockButton);
                 Button backButton = findViewById(R.id.backButton);
                 backButton.setOnClickListener(v -> {
@@ -49,7 +50,6 @@ public class TrainingsConfigActivity extends AppCompatActivity implements Blueto
                 Button sendButton = findViewById(R.id.sendButton);
                 sendButton.setOnClickListener(v -> {
                         if (isServiceBound && bluetoothService != null) {
-                                bluetoothService.sendData("Config Steering");
                                 Toast.makeText(TrainingsConfigActivity.this, "Config Steering command sent", Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent(TrainingsConfigActivity.this, TrainingActivity.class);
@@ -102,6 +102,7 @@ public class TrainingsConfigActivity extends AppCompatActivity implements Blueto
                         bluetoothService = binder.getService();
                         bluetoothService.registerListener(TrainingsConfigActivity.this);
                         isServiceBound = true;
+
                 }
 
                 @Override

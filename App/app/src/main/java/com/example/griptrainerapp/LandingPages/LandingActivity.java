@@ -74,6 +74,7 @@ public class LandingActivity extends AppCompatActivity implements BluetoothLESer
                 // Proceed with the action
                 if (v.getId() == R.id.startTrainingConfigButton) {
                     navigateTo(TrainingsConfigActivity.class);
+                    bluetoothService.sendData("Config Steering");
                 } else if (v.getId() == R.id.manuelTrainingButton) {
                     navigateTo(ManuelActivity.class);
                 }
@@ -149,7 +150,7 @@ public class LandingActivity extends AppCompatActivity implements BluetoothLESer
 
     private String getDeviceAddress() {
         // Return the address of the device you want to connect to
-        return "7C:9E:BD:66:4C:26";
+        return "24:4C:AB:0E:1C:7A";
     }
 
     @Override

@@ -48,7 +48,6 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
     private long startTime;
     private BluetoothLEService bluetoothService;
     private boolean isServiceBound = false;
-
     private ArrayList<String> messagesList = new ArrayList<>();
     private final ArrayList<String> instructionsList = new ArrayList<>();
 
@@ -59,6 +58,8 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
             bluetoothService = binder.getService();
             bluetoothService.registerListener(TrainingActivity.this);
             isServiceBound = true;
+
+
         }
 
         @Override
@@ -82,6 +83,7 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
         Button buttonStart = findViewById(R.id.buttonStartTrain);
         messagesListView = findViewById(R.id.ReceiveMessage_lv_1);
         instructionsListView = findViewById(R.id.Instructions_lv);
+        instructionsList.add("Start Training");
 
         ArrayList<String> passedInstructions = getIntent().getStringArrayListExtra("trainingInstructions");
         String configSource = getIntent().getStringExtra("configSource");
@@ -128,7 +130,6 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
     }
 
     private void processManuelActivityInstructions(ArrayList<String> instructions) {
-        Log.d("manuelSteering", "Is true");
         for (String instruction : instructions) {
             // Assuming the instruction format is "Block X: Delay: Y, Steps: Z"
             // First, remove the "Block X:" part
@@ -158,6 +159,7 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
         super.onStart();
         Intent intent = new Intent(this, BluetoothLEService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -270,6 +272,7 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
         // Ensure BLE connection is established
         if (isServiceBound && bluetoothService != null) {
             // Start sending instructions
+            currentInstructionIndex = 0;
             startSendingInstructions();
         } else {
             Toast.makeText(this, "BLE Service not connected. Please connect first.", Toast.LENGTH_SHORT).show();
@@ -280,46 +283,35 @@ public class TrainingActivity extends AppCompatActivity implements BluetoothLESe
         currentInstructionIndex = 0; // Start from the first instruction
         sendNextInstruction();
     }
-
     private void sendNextInstruction() {
+        // Check if there are instructions to send
         if (currentInstructionIndex < instructionsList.size()) {
             String instruction = instructionsList.get(currentInstructionIndex);
-            // Extracting the delay from the instruction text
-            int delay = extractDelay(instruction);
+            int delay = extractDelay(instruction);  // Extract delay for the current instruction
 
-            // Sending the actual instruction part over BLE, assuming instruction details are before ' - Delay:'
+            // Split the instruction to get the command part (before ' - Delay:')
             String[] parts = instruction.split(" - Delay:");
             if (parts.length > 0) {
-                sendDataOverBLE(parts[0]); // Send only the instruction part, without the delay information
+                sendDataOverBLE(parts[0]);  // Send the instruction command via BLE
             }
 
-            // Highlight the current instruction in the ListView (if needed)
+            // Move to the next instruction
+            currentInstructionIndex++;
 
-            // Check if the adapter is an instance of ArrayAdapter<String> before casting
-            ListAdapter adapter = instructionsListView.getAdapter();
-            if (adapter instanceof ArrayAdapter<?>) {
-                ArrayAdapter<String> arrayAdapter = (ArrayAdapter<String>) adapter;
-                arrayAdapter.notifyDataSetChanged();
-            }
-
-            // Use extracted delay for the next instruction
+            // Schedule sending of the next instruction after the delay
             new Handler().postDelayed(() -> {
-                // Remove the sent instruction from the list
-                instructionsList.remove(currentInstructionIndex);
-                // No need to increment index as the list size has decreased
-
-                // Check if the adapter is an instance of ArrayAdapter<String> before casting
-                ListAdapter updatedAdapter = instructionsListView.getAdapter();
-                if (updatedAdapter instanceof ArrayAdapter<?>) {
-                    ArrayAdapter<String> updatedArrayAdapter = (ArrayAdapter<String>) updatedAdapter;
-                    updatedArrayAdapter.notifyDataSetChanged();
+                // Check if there are more instructions to send
+                if (currentInstructionIndex < instructionsList.size()) {
+                    sendNextInstruction();  // Send the next instruction
+                } else {
+                    sendDataOverBLE("Config done");  // All instructions sent, notify config completion
                 }
-
-                // Send the next instruction
-                sendNextInstruction();
-            }, 1000); // Convert seconds to milliseconds
+            }, 1000);  // Delay is converted from seconds to milliseconds
         }
     }
+
+
+
 
 
     // Method to extract delay from the instruction string

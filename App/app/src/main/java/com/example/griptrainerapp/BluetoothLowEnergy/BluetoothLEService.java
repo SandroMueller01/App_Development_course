@@ -311,6 +311,4 @@ public class BluetoothLEService extends Service {
         }
 
     };
-
-    // ... [Other methods]
 }

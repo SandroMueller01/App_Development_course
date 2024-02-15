@@ -100,64 +100,45 @@ public class ManuelActivity extends Activity implements BluetoothLEService.Bluet
         super.onStop();
     }
 
-    @Override
     public void onDataReceived(String data) {
-        if (isFinishing()) {
-            // Activity is finishing, no need to process the data
-            return;
-        }
-
+        if (isFinishing()) return;
         runOnUiThread(() -> {
-            if (isTrainingStopped) {
-                // Training is stopped, ignore incoming data
-                return;
-            }
+            if (isTrainingStopped) return;
 
-            // Get the current timestamp
             String timestamp = getCurrentTimestamp();
-
-            // Create a message object with content and timestamp
             Message message = new Message(data, timestamp);
-
-            // Add the message to the list
             sentMessagesList.add(message);
-
-            // Notify the adapter to refresh the ListView
             sendMessagesAdapter.notifyDataSetChanged();
 
-            // Parse the incoming data and update progress bars
-            String[] forces = data.trim().split(", ");
-            for (String force : forces) {
-                String[] parts = force.trim().split(": ");
-                if (parts.length == 2) {
-                    try {
-                        int value = Integer.parseInt(parts[1].trim());
-                        switch (parts[0]) {
-                            case "Force 1":
-                                progressBar1.setProgress(value);
-                                break;
-                            case "Force 2":
-                                progressBar2.setProgress(value);
-                                break;
-                            case "Force 3":
-                                progressBar3.setProgress(value);
-                                break;
-                            case "Force 4":
-                                progressBar4.setProgress(value);
-                                break;
-                            default:
-                                // Handle unknown force
-                                Toast.makeText(this, "Unknown force label", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    } catch (NumberFormatException e) {
-                        // Handle the case where the string is not a valid integer
-                        Toast.makeText(this, "Invalid force value", Toast.LENGTH_SHORT).show();
+            // Directly parse the incoming data without splitting on comma
+            String[] parts = data.trim().split(": ");
+            if (parts.length == 2) {
+                try {
+                    int value = Integer.parseInt(parts[1].trim());
+                    switch (parts[0]) {
+                        case "Force 1":
+                            progressBar1.setProgress(value);
+                            break;
+                        case "Force 2":
+                            progressBar2.setProgress(value);
+                            break;
+                        case "Force 3":
+                            progressBar3.setProgress(value);
+                            break;
+                        case "Force 4":
+                            progressBar4.setProgress(value);
+                            break;
+                        default:
+                            Toast.makeText(this, "Unknown force label", Toast.LENGTH_SHORT).show();
+                            break;
                     }
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this, "Invalid force value", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +157,12 @@ public class ManuelActivity extends Activity implements BluetoothLEService.Bluet
         progressBar2 = findViewById(R.id.progressBar2);
         progressBar3 = findViewById(R.id.progressBar3);
         progressBar4 = findViewById(R.id.progressBar4);
+
+        // Set the maximum value for each progress bar
+        progressBar1.setMax(1024);
+        progressBar2.setMax(1024);
+        progressBar3.setMax(1024);
+        progressBar4.setMax(1024);
 
         textView = findViewById(R.id.textView2);
         // Set an initial state or consider updating dynamically
@@ -199,7 +186,7 @@ public class ManuelActivity extends Activity implements BluetoothLEService.Bluet
         ImageButton buttonArrowUp = findViewById(R.id.buttonArrowUp);
         buttonArrowUp.setOnTouchListener((v, event) -> {
             if (!isTrainingStopped) {
-                sendAndDisplayMessage("Steps: 10");
+                sendAndDisplayMessage("Steps: 30");
             }
             return true;  // Consume the touch event
         });
@@ -207,7 +194,7 @@ public class ManuelActivity extends Activity implements BluetoothLEService.Bluet
         ImageButton buttonArrowDown = findViewById(R.id.buttonArrowDown);
         buttonArrowDown.setOnTouchListener((v, event) -> {
             if (!isTrainingStopped) {
-                sendAndDisplayMessage("Steps: -10");
+                sendAndDisplayMessage("Steps: -30");
             }
             return true;  // Consume the touch event
         });
